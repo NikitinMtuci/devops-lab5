@@ -10,19 +10,19 @@ on:
 
 jobs:
   cd:
-    runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout
+      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Login to Docker Hub
+      # 2. Login to Docker Hub (логин через vars, токен через secrets)
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ var.DOCKERHUB_USERNAME }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # 3. Build and push Docker image
